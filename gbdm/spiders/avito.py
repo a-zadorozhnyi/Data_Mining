@@ -100,15 +100,5 @@ class AvitoSpider(scrapy.Spider):
         for i in range(param_keys.__len__()):
             ad['params'].append({param_keys[i][:-2]:param_values[i]})
 
-
-        item_loader = ItemLoader(AvitoItem(), response)
-        for k, v in self.__xpath_query.items():
-            if k in ('pagination', 'ads'):
-                continue
-            item_loader.add_xpath(k, v)
-        item_loader.add_value('url', response.url)
-
-        yield item_loader.load_item()
-
     def save_to_mongo(self):
         self.collection.insert(ad)
