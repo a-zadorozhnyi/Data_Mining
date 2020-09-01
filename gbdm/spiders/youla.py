@@ -57,38 +57,38 @@ class YoulaSpider(scrapy.Spider):
     }
 
 
-    # def parse(self, response, start=True):
-    #     print(1)
-    #     if start:
-    #         pages_count = int(response.xpath(self.__row_xpath['pagination']).extract()[1])
-    #
-    #         for num in range(2, pages_count + 1):
-    #             yield response.follow(
-    #                 f'page={num}',
-    #                 callback=self.parse,
-    #                 cb_kwargs={'start': False}
-    #             )
-    #
-    #     for link in response.xpath(self.__row_xpath['ads']):
-    #         yield response.follow(
-    #             link,
-    #             callback=self.ads_parse
-    #         )
-    #
-    #
-    # def ads_parse(self, response):
-    #     item_loader = ItemLoader(YoulaItem(), response)
-    #
-    #     for key, value in self.__ads_xpath.items():
-    #         item_loader.add_xpath(key, value)
-    #     item_loader.add_value('url', response.url)
-    #     item_loader.add_value('author_url', 'https://youla.ru/user/' + search_author_id(response))
-    #
-    #     yield item_loader.load_item()
-
-
-
     def parse(self, response, start=True):
         print(1)
         if start:
-            page_count = int()
+            pages_count = int(response.xpath(self.__row_xpath['pagination']).extract()[1])
+
+            for num in range(2, pages_count + 1):
+                yield response.follow(
+                    f'page={num}',
+                    callback=self.parse,
+                    cb_kwargs={'start': False}
+                )
+
+        for link in response.xpath(self.__row_xpath['ads']):
+            yield response.follow(
+                link,
+                callback=self.ads_parse
+            )
+
+
+    def ads_parse(self, response):
+        item_loader = ItemLoader(YoulaItem(), response)
+
+        for key, value in self.__ads_xpath.items():
+            item_loader.add_xpath(key, value)
+        item_loader.add_value('url', response.url)
+        item_loader.add_value('author_url', 'https://youla.ru/user/' + search_author_id(response))
+
+        yield item_loader.load_item()
+
+
+
+    # def parse(self, response, start=True):
+    #     print(1)
+    #     if start:
+    #         page_count = int()
