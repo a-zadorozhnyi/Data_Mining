@@ -28,8 +28,8 @@ import re
 class YoulaSpider(scrapy.Spider):
     name = 'youla'
     allowed_domains = ['www.youla.ru']
-    start_urls = ['https://auto.youla.ru/advert/used/volvo/xc90/prv--1dda46910897f291/']
-    #start_urls = ['https://auto.youla.ru/moskva/cars/used/volvo/']
+    #start_urls = ['https://auto.youla.ru/advert/used/volvo/xc90/prv--1dda46910897f291/']
+    start_urls = ['https://auto.youla.ru/moskva/cars/used/volvo/']
 
     __row_xpath = {
         'ads': '//div[@id="serp"]/span/article//a[@data-target="serp-snippet-title"]/@href',
